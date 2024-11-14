@@ -42,9 +42,7 @@ class Function2(ScalarFunction):
 @pytest.mark.task1_3
 def test_chain_rule1() -> None:
     x = minitorch.Scalar(0.0)
-    constant = minitorch.Scalar(
-        0.0, ScalarHistory(Function1, ctx=Context(), inputs=[x, x])
-    )
+    constant = minitorch.Scalar(0.0, ScalarHistory(Function1, ctx=Context(), inputs=[x, x]))
     back = constant.chain_rule(d_output=5)
     assert len(list(back)) == 2
 
@@ -52,9 +50,7 @@ def test_chain_rule1() -> None:
 @pytest.mark.task1_3
 def test_chain_rule2() -> None:
     var = minitorch.Scalar(0.0, ScalarHistory())
-    constant = minitorch.Scalar(
-        0.0, ScalarHistory(Function1, ctx=Context(), inputs=[var, var])
-    )
+    constant = minitorch.Scalar(0.0, ScalarHistory(Function1, ctx=Context(), inputs=[var, var]))
     back = constant.chain_rule(d_output=5)
     back = list(back)
     assert len(back) == 2
@@ -74,7 +70,7 @@ def test_chain_rule3() -> None:
     back = list(back)
     assert len(back) == 2
     variable, deriv = back[1]
-    # assert variable.name == var.name
+    assert variable.name == var.name
     assert deriv == 5 * 10
 
 
@@ -89,10 +85,10 @@ def test_chain_rule4() -> None:
     back = list(back)
     assert len(back) == 2
     variable, deriv = back[0]
-    # assert variable.name == var1.name
+    assert variable.name == var1.name
     assert deriv == 5 * (10 + 1)
     variable, deriv = back[1]
-    # assert variable.name == var2.name
+    assert variable.name == var2.name
     assert deriv == 5 * 5
 
 

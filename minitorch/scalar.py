@@ -163,8 +163,7 @@ class Scalar:
         assert h.last_fn is not None
         assert h.ctx is not None
 
-        # TODO: Implement for Task 1.3.
-        raise NotImplementedError("Need to implement for Task 1.3")
+        return zip(h.inputs, h.last_fn._backward(h.ctx, d_output))
 
     def backward(self, d_output: Optional[float] = None) -> None:
         """
@@ -203,6 +202,5 @@ but was expecting derivative f'=%f from central difference."""
             check.data,
             1e-2,
             1e-2,
-            err_msg=err_msg
-            % (str([x.data for x in scalars]), x.derivative, i, check.data),
+            err_msg=err_msg % (str([x.data for x in scalars]), x.derivative, i, check.data),
         )
