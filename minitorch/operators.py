@@ -51,17 +51,23 @@ def add(x: float, y: float) -> float:
 
 def neg(x: float) -> float:
     """Compute the negation of x."""
-    return -x
+    return -1.0 * x
 
 
-def lt(x: float, y: float) -> bool:
+def lt(x: float, y: float) -> float:
     """Determine if x is less than y."""
-    return x < y
+    if x < y:
+        return 1.0 
+    else:
+        return 0.0
 
 
-def eq(x: float, y: float) -> bool:
+def eq(x: float, y: float) -> float:
     """Determine if x is equal to y."""
-    return x == y
+    if x == y:
+        return 1.0
+    else:
+        return 0.0
 
 
 def max(x: float, y: float) -> float:
@@ -92,7 +98,7 @@ def sigmoid(x: float) -> float:
 def relu(x: float) -> float:
     """Compute the ReLU of x."""
     if x <= 0:
-        return 0
+        return 0.0
     return x
 
 
@@ -119,10 +125,10 @@ def inv_back(x: float, y: float) -> float:
 def relu_back(x: float, y: float) -> float:
     """Compute the derivative of ReLU times a value."""
     if x < 0:
-        return 0
+        return 0.0
     if x == 0:
         warnings.warn("The derivative of ReLU is undefined at zero, using 0.", stacklevel=1)
-        return 0
+        return 0.0
     return y
 
 
