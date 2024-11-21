@@ -39,13 +39,11 @@ class Linear(minitorch.Module):
             )
 
     def forward(self, inputs):
-        res = [minitorch.Scalar(0)] * len(self.bias)
+        res = [b.value for b in self.bias]
 
         for i, row_weights in enumerate(self.weights):
             for j, weight in enumerate(row_weights):
                 res[j] += inputs[i] * weight.value
-        for j, bias in enumerate(self.bias):
-            res[j] += bias.value
 
         return res
 
@@ -106,8 +104,14 @@ class ScalarTrain:
 
 
 if __name__ == "__main__":
+    # PTS = 50
+    # HIDDEN_LAYER_SIZE = 2
+    # RATE = 0.5
+    # data = minitorch.datasets["Simple"](PTS)
+    # ScalarTrain(HIDDEN_LAYER_SIZE).train(data, RATE)
+
     PTS = 50
-    HIDDEN_LAYER_SIZE = 2
-    RATE = 0.5
-    data = minitorch.datasets["Simple"](PTS)
-    ScalarTrain(HIDDEN_LAYER_SIZE).train(data, RATE)
+    HIDDEN_LAYER_SIZE = 4
+    RATE = 0.1
+    data = minitorch.datasets["Xor"](PTS)
+    ScalarTrain(HIDDEN_LAYER_SIZE).train(data, RATE, max_epochs=1000)
