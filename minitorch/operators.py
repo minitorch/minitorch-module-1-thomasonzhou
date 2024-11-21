@@ -1,7 +1,6 @@
 """Collection of the core mathematical operators used throughout the code base."""
 
 import math
-import warnings
 from typing import Callable
 
 # ## Task 0.1
@@ -88,18 +87,9 @@ def exp(x: float) -> float:
     return math.exp(x)
 
 
-def sigmoid(x: float) -> float:
-    """Compute the sigmoid of x."""
-    if x >= 0:
-        return 1.0 / (1.0 + exp(-x))
-    return exp(x) / (1.0 + exp(x))
-
-
 def relu(x: float) -> float:
     """Compute the ReLU of x."""
-    if x <= 0:
-        return 0.0
-    return x
+    return max(x, 0.0)
 
 
 def log(x: float) -> float:
@@ -110,6 +100,11 @@ def log(x: float) -> float:
 def inv(x: float) -> float:
     """Compute the reciprocal of x."""
     return 1.0 / x
+
+
+def sigmoid(x: float) -> float:
+    """Compute the sigmoid of x."""
+    return inv(add(1, exp(neg(x))))
 
 
 def log_back(x: float, deriv: float) -> float:
@@ -124,10 +119,7 @@ def inv_back(x: float, deriv: float) -> float:
 
 def relu_back(x: float, deriv: float) -> float:
     """Compute the derivative of ReLU times a value."""
-    if x < 0:
-        return 0.0
-    if x == 0:
-        warnings.warn("The derivative of ReLU is undefined at zero, using 0.", stacklevel=1)
+    if x <= 0:
         return 0.0
     return deriv
 

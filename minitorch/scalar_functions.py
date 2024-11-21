@@ -134,7 +134,7 @@ class Neg(ScalarFunction):
 
     @staticmethod
     def backward(ctx: Context, d_output: float) -> float:
-        return -d_output
+        return operators.neg(d_output)
 
 
 class Sigmoid(ScalarFunction):
@@ -148,7 +148,7 @@ class Sigmoid(ScalarFunction):
     @staticmethod
     def backward(ctx: Context, d_output: float) -> float:
         a = unwrap_tuple(ctx.saved_values)
-        return operators.sigmoid(a) * (1.0 - operators.sigmoid(a))
+        return d_output * operators.sigmoid(a) * (1.0 - operators.sigmoid(a))
 
 
 class ReLU(ScalarFunction):
