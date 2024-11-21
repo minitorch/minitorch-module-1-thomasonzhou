@@ -115,9 +115,7 @@ class MathTest(Generic[A]):
     def complex(a: A) -> A:
         return (
             operators.log(
-                operators.sigmoid(
-                    operators.relu(operators.relu(a * 10 + 7) * 6 + 5) * 10
-                )
+                operators.sigmoid(operators.relu(operators.relu(a * 10 + 7) * 6 + 5) * 10)
             )
             / 50
         )

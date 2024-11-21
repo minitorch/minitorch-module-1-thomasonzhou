@@ -80,7 +80,10 @@ class Scalar:
             self.name = str(self.unique_id)
 
     def __repr__(self) -> str:
-        return "Scalar(%f)" % self.data
+        return "Scalar(val: %f, id: %d)" % (self.data, self.unique_id)
+
+    def __hash__(self):
+        return self.unique_id
 
     def __mul__(self, b: ScalarLike) -> Scalar:
         return Mul.apply(self, b)
@@ -163,7 +166,11 @@ class Scalar:
         assert h.last_fn is not None
         assert h.ctx is not None
 
-        return zip(h.inputs, h.last_fn._backward(h.ctx, d_output))
+        for var, deriv in zip(h.inputs, h.last_fn._backward(h.ctx, d_output)):
+            if not var.is_constant():  # filter out constants, which have a derivative of zero
+                yield var, deriv
+            else:
+                assert var.derivative is None
 
     def backward(self, d_output: Optional[float] = None) -> None:
         """
@@ -195,7 +202,7 @@ Derivative check at arguments f(%s) and received derivative f'=%f for argument %
 but was expecting derivative f'=%f from central difference."""
     for i, x in enumerate(scalars):
         check = central_difference(f, *scalars, arg=i)
-        print(str([x.data for x in scalars]), x.derivative, i, check)
+        print(f, str([x.data for x in scalars]), x.derivative, i, check)
         assert x.derivative is not None
         np.testing.assert_allclose(
             x.derivative,

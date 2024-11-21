@@ -57,7 +57,7 @@ def neg(x: float) -> float:
 def lt(x: float, y: float) -> float:
     """Determine if x is less than y."""
     if x < y:
-        return 1.0 
+        return 1.0
     else:
         return 0.0
 
@@ -112,24 +112,24 @@ def inv(x: float) -> float:
     return 1.0 / x
 
 
-def log_back(x: float, y: float) -> float:
+def log_back(x: float, deriv: float) -> float:
     """Compute the derivative of log times a value."""
-    return inv(x) * y
+    return inv(x) * deriv
 
 
-def inv_back(x: float, y: float) -> float:
+def inv_back(x: float, deriv: float) -> float:
     """Compute the derivative of inv times a value."""
-    return -(inv(x) ** 2) * y
+    return -(inv(x) ** 2) * deriv
 
 
-def relu_back(x: float, y: float) -> float:
+def relu_back(x: float, deriv: float) -> float:
     """Compute the derivative of ReLU times a value."""
     if x < 0:
         return 0.0
     if x == 0:
         warnings.warn("The derivative of ReLU is undefined at zero, using 0.", stacklevel=1)
         return 0.0
-    return y
+    return deriv
 
 
 # ## Task 0.3
