@@ -17,9 +17,7 @@ from .strategies import assert_close, small_floats
 
 
 @composite
-def scalars(
-    draw: DrawFn, min_value: float = -100000, max_value: float = 100000
-) -> Scalar:
+def scalars(draw: DrawFn, min_value: float = -100000, max_value: float = 100000) -> Scalar:
     val = draw(floats(min_value=min_value, max_value=max_value))
     return minitorch.Scalar(val)
 

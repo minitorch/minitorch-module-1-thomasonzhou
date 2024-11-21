@@ -10,6 +10,7 @@ Usage: python sync_previous_module.py <source_dir_name> <dest_dir_name>
 
 Ex:  python sync_previous_module.py mle-module-0-sauravpanda24 mle-module-1-sauravpanda24
 """
+
 import os
 import shutil
 import sys
@@ -34,17 +35,18 @@ f.close()
 # get the source and destination from arguments
 source = sys.argv[1]
 dest = sys.argv[2]
+print("hwat", source, dest)
 
 # copy the files from source to destination
 try:
     for file in files_to_move:
-        print(f"Moving file : ", file)
+        print("Moving file : ", file)
         shutil.copy(
             os.path.join(grandparent_path, source, file),
             os.path.join(grandparent_path, dest, file),
         )
     print(f"Finished moving {len(files_to_move)} files")
-except Exception as e:
+except Exception:
     print(
         "Something went wrong! please check if the source and destination folders are present in same folder"
     )
