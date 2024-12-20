@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Any, Iterable, Tuple
 from typing_extensions import Protocol
 from collections import deque
+
 # ## Task 1.1
 # Central Difference calculation
 
@@ -66,13 +67,13 @@ def topological_sort(variable: Variable) -> Iterable[Variable]:
     """
 
     # Kahn's algorithm
-    indegrees = {}
-    adj = {variable: []}
+    indegrees: dict[Variable, int] = {}
+    adj: dict[Variable, list[Variable]] = {variable: []}
 
     q = deque([variable])
     while len(q) > 0:
         v = q.popleft()
-        for i in v.history.inputs:
+        for i in v.history.inputs:  # type: ignore[attr-defined]
             if i.is_constant():
                 continue
             indegrees[i] = indegrees.get(i, 0) + 1

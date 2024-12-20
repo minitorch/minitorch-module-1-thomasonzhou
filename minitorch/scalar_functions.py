@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 import minitorch
 
@@ -20,7 +20,7 @@ def wrap_tuple(x):  # type: ignore
     return (x,)
 
 
-def unwrap_tuple(x):  # type: ignore
+def unwrap_tuple(x) -> Any:  # type: ignore
     "Turn a singleton tuple into a value"
     if len(x) == 1:
         return x[0]
